@@ -18,6 +18,7 @@
     </properties>
     <modules>
         <module>occupation</module>
+        <module>random</module>
     </modules>
 
     <dependencies>

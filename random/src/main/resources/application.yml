@@ -1,0 +1,9 @@
+server:
+  # 扫描本级可用端口，获得可使用随机端口
+  port: 0
+
+# 日志配置文件
+logging:
+  # 控制日志级别
+  level:
+    root: info
