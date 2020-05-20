@@ -1,0 +1,3 @@
+server:
+  # 完全关闭HTTP端点，但仍创建一个WebApplicationContext
+  port: -1
