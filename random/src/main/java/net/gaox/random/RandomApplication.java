@@ -5,8 +5,7 @@ import net.gaox.random.os.OSInfo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-
-import java.util.Random;
+import org.springframework.core.env.Environment;
 
 /**
  * <p> 系统启动时使用随机端口 </p>
@@ -19,14 +18,14 @@ import java.util.Random;
 @SpringBootApplication
 public class RandomApplication {
 
+    final Environment environment;
+
+    public RandomApplication(Environment environment) {
+        this.environment = environment;
+    }
+
     public static void main(String[] args) {
-        int port = new Random().nextInt(200) + 2000;
-        log.info("random.int(2000,2200) is [{}]", port);
-        if (OSInfo.portUsed(port)) {
-            log.error("[{}] is used!", port);
-        } else {
-            log.info("app was in [{}] start!", port);
-        }
+        OSInfo.randomOrStartPort(args);
         SpringApplication.run(RandomApplication.class, args);
     }
 }

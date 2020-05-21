@@ -1,11 +1,13 @@
 package net.gaox.random.os;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 /**
  * <p> 操作系统类 </p>
@@ -175,17 +177,69 @@ public class OSInfo {
         }
 
         sb.trimToSize();
-        log.info("netStat:\n{}", sb.toString());
-        return sb.length() > 0;
+        log.debug("netStat length={}\n{}", sb.length(), sb.toString());
+        return sb.length() > 2;
+    }
+
+
+    /**
+     * 获取可用端口
+     *
+     * @return port
+     */
+    public static int getAvailablePort() {
+        int max = 65535;
+        int min = 2000;
+
+        Random random = new Random();
+        int port = random.nextInt(max) % (max - min + 1) + min;
+        boolean using = portUsed(port);
+        if (using) {
+            return getAvailablePort();
+        } else {
+            return port;
+        }
+    }
+
+    /**
+     * 配置端口
+     *
+     * @param args
+     */
+    public static void randomOrStartPort(String[] args) {
+        Boolean isServerPort = false;
+        String serverPort = "";
+        if (args != null) {
+            for (String arg : args) {
+                if (StringUtils.hasText(arg) &&
+                        arg.startsWith("--server.port")
+                ) {
+                    isServerPort = true;
+                    serverPort = arg;
+                    break;
+                }
+            }
+        }
+
+        //没有指定端口，则随机生成一个可用的端口
+        if (!isServerPort) {
+            int port = getAvailablePort();
+            log.info("current server.port=" + port);
+            System.setProperty("server.port", String.valueOf(port));
+        } else {
+            //指定了端口，则以指定的端口为准
+            log.info("current server.port=" + serverPort.split("=")[1]);
+            System.setProperty("server.port", serverPort.split("=")[1]);
+        }
     }
 
     /**
      * Test
      *
-     * @param args
+     * @param args args
      */
     public static void main(String[] args) {
-        System.out.println(OSInfo.getOSname());
+        System.out.println(getOSname());
         System.out.println("------------ origin data ----------------");
         System.out.println(System.getProperty("os.name"));
         System.out.println(System.getProperty("os.version"));

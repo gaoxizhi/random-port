@@ -26,10 +26,11 @@ public class OccupationApplication {
         SpringApplication.run(OccupationApplication.class, args);
         ExecutorService exec = Executors.newCachedThreadPool();
 
-        Integer portSize = 200;
+        // 随机端口长度
+        Integer portSize = 12999 - 12602;
 
         for (int i = 0; i < portSize; i++) {
-            final int portNum = i + 2000;
+            final int portNum = i + 12602;
             // 排除8的倍数
             if (new Random().nextInt(3) == 0) {
                 log.warn("now port is [{}]", portNum);
