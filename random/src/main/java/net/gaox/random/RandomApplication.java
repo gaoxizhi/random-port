@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.gaox.random.os.OSInfo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 import java.util.Random;
 
@@ -14,6 +15,7 @@ import java.util.Random;
  * @date 2020/5/20 21:36
  */
 @Slf4j
+@EnableEurekaClient
 @SpringBootApplication
 public class RandomApplication {
 

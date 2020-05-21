@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: eureka
+
+server:
+  port: 12600
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+# 日志配置文件
+logging:
+  # 控制日志级别
+  level:
+    root: info

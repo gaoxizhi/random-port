@@ -3,7 +3,20 @@ server:
   # port: 0
 
   # 使用范围内随机数作为端口，当生成端口已被占用时，无法启动
-  port: ${random.int(2000,2200)}
+  port: ${random.int(12602,12999)}
+
+spring:
+  application:
+    name: eureka-client-random
+# 配置启动过后注册到Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:12600/eureka/
+  security:
+    basic:
+      enabled: false
+
 
 # 日志配置文件
 logging:
